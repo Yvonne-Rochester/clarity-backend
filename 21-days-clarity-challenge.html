@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clarity Challenge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+   <style>
+    
+/* Base Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #2a2f36, #3e3c5e, #84525c);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  color: #eaeaea;
+  line-height: 1.6;
+}
+
+h1, h2 {
+  font-family: 'Playfair Display', serif;
+  color: #f4d6e6;
+  font-weight: 700;
+}
+
+h3 {
+  color: #523e48;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+p {
+  font-size: 1.1em;
+  margin-bottom: 1.2em;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 4em 2em;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* CTA Buttons */
+.cta-button, .secondary-button {
+  background-color: #ff4081;
+  color: white;
+  padding: 1em 2em;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  box-shadow: 0 4px 10px rgba(255, 64, 129, 0.4);
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #e91e63;
+}
+
+/* Flip Cards */
+.flipcard-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  align-items: center;
+  padding: 2em;
+}
+
+.flip-card {
+  background-color: transparent;
+  border: 2px solid #a8e6cf;
+  border-radius: 12px;
+  width: 500px;
+  height: 250px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+  border-radius: 12px;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  padding: 1.5em;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+
+.flip-card-front {
+  background-color: #dff5e1;
+  color: #1b1f23;
+}
+
+.flip-card-back {
+  background-color: #b2f2bb;
+  color: #1b1f23;
+  transform: rotateY(180deg);
+}
+
+/* Signup Section */
+.signup-section {
+  background-color: #2a2f36;
+  padding: 3em 2em;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  margin-top: 2em;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  color: #a8e6cf;
+}
+
+input {
+  padding: 0.75em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+  background-color: #fdfdfd;
+  color: #2a2f36;
+}
+
+/* Sticky CTA */
+.sticky-cta {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #f4d6e6;
+  color: #2a2f36;
+  padding: 1em 1.5em;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+/* Animations */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.2s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pulse {
+  animation: pulseEffect 2s infinite;
+}
+
+@keyframes pulseEffect {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.flip-in {
+  animation: flipIn 0.8s ease forwards;
+  transform: rotateY(90deg);
+  opacity: 0;
+}
+
+@keyframes flipIn {
+  to {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .flip-card {
+    width: 100%;
+    height: auto;
+  }
+
+  .cta-button, .secondary-button {
+    width: 100%;
+    text-align: center;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero fade-in">
+    <h1>Clarity isn’t found—it’s reclaimed.</h1>
+    <p>A 21-day journey to excavate your truth, reclaim your voice, and design a life that reflects your soul.</p>
+    <a href="#signup" class="cta-button pulse">Begin My Challenge</a>
+  </section>
+
+  <!-- Journey Overview -->
+  <section class="flipcard-column fade-in">
+    <div class="flip-card flip-in">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <h3>Week 1: Excavation</h3>
+          <p class="flipcard-text">Uncover beliefs, patterns, and emotional clutter that cloud your clarity.</p>
+        </div>
+        <div class="flip-card-back">
+          <p class="flipcard-text">“What truths do you need to speak—even if your voice shakes?”</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card flip-in">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <h3>Week 2: Reclamation</h3>
+          <p class="flipcard-text">Reclaim your voice, values, and emotional sovereignty with bold intention.</p>
+        </div>
+        <div class="flip-card-back">
+          <p class="flipcard-text">“What belief about yourself no longer serves you?”</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card flip-in">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <h3>Week 3: Integration</h3>
+          <p class="flipcard-text">Align your actions, design your rhythm, and embody your truth.</p>
+        </div>
+        <div class="flip-card-back">
+          <p class="flipcard-text">“How will you keep choosing quality—even when it's inconvenient?”</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="hero fade-in">
+    <h2>What Clarity Feels Like</h2>
+    <p>“I didn’t realize how much I was carrying until I started writing.”</p>
+    <p>“This challenge didn’t just shift my mindset—it shifted my rhythm.”</p>
+    <p>“I found my voice again. And I’m not giving it back.”</p>
+  </section>
+
+<!-- Signup Section -->
+<section id="signup" class="signup-section fade-in">
+  <h2>Ready to go deeper?</h2>
+  <p>Sign up to begin your 21-day clarity journey. You’ll receive daily prompts, guided reflections, and access to the IntelleWhyze chatbot.</p>
+
+  <form id="clarity-form" class="signup-form">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Your full name" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required />
+    </div>
+    <div class="form-group">
+      <label for="start-date">Start Date (optional):</label>
+      <input type="text" id="start-date" name="startDate" placeholder="mm / dd / yyyy" />
+    </div>
+    <button type="submit" class="cta-button">Begin My Challenge</button>
+  </form>
+
+  <div id="feedback" role="alert" style="margin-top: 1em; font-weight: bold;"></div>
+</section>
+
+<!-- JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('clarity-form');
+    const feedback = document.getElementById('feedback');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const startDate = document.getElementById('start-date').value.trim();
+
+      feedback.textContent = '';
+      feedback.style.color = 'black';
+
+      try {
+        const response = await fetch('http://localhost:3001/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, startDate })
+        });
+
+        if (!response.ok) throw new Error(`Server responded with ${response.status}`);
+
+        const result = await response.json();
+        feedback.textContent = result.message || "You're in! Check your inbox for Day 1.";
+        feedback.style.color = 'green';
+      } catch (err) {
+        feedback.textContent = "Something went wrong. Please try again later.";
+        feedback.style.color = 'red';
+        console.error("Fetch error:", err);
+      }
+    });
+  });
+</script>
+
+  <!-- Facilitator CTA -->
+  <section class="hero fade-in">
+    <h2>Facilitator Toolkit Available</h2>
+    <p>Want to guide others through the challenge? Request access to our facilitator kit with group prompts, reflection guides, and coaching tips.</p>
+    <a href="#" class="secondary-button">Request Toolkit</a>
+  </section>
+
+  <!-- Sticky CTA -->
+  <div class="sticky-cta pulse">
+    Begin My Challenge
+  </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const fadeElements = document.querySelectorAll(".fade-in, .flip-in");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = "running";
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeElements.forEach(el => {
+      el.style.animationPlayState = "paused";
+      observer.observe(el);
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('clarity-form');
+    const feedback = document.getElementById('feedback');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const startDate = form.startDate.value.trim();
+
+      feedback.textContent = '';
+      feedback.style.color = 'black';
+
+      try {
+        const response = await fetch('http://localhost:3001/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, startDate })
+        });
+
+        if (!response.ok) throw new Error(`Server responded with ${response.status}`);
+
+        const result = await response.json();
+        feedback.textContent = result.message || "You're in! Check your inbox for Day 1.";
+        feedback.style.color = 'green';
+      } catch (err) {
+        feedback.textContent = "Something went wrong. Please try again later.";
+        feedback.style.color = 'red';
+        console.error("Fetch error:", err);
+      }
+    });
+  });
+</script>
+
+
+
+</body>
+</html>
