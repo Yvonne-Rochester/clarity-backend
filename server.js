@@ -194,7 +194,7 @@ app.post('/simple-offer-followup', async (req, res) => {
       });
     }
 
-    const SYSTEM_PROMPT = `
+const SYSTEM_PROMPT = `
 You are The Simple Offer Decision Path Engine.
 
 Your job is to take the user's initial offer profile and follow-up choices, then produce a final clear offer direction.
@@ -232,6 +232,7 @@ Return JSON in exactly this structure:
 }
 
 Rules:
+- Use the user's focusChoice to refine the direction.
 - finalOfferName should sound sellable and clear.
 - finalOfferDescription should explain the offer in one short paragraph.
 - whoItsFor should be specific.
