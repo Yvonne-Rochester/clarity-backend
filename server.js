@@ -142,6 +142,9 @@ Rules:
   "primaryPath": "",
   "secondaryPath": "",
   "starterOffer": "",
+  "whyThisFits": "",
+  "whatToBuildFirst": [],
+  "avoidThis": [],
   "decisionFrame": "",
   "nextStep": ""
 }
