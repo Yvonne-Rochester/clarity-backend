@@ -174,6 +174,106 @@ Rules:
   }
 });
 
+app.post('/simple-offer-followup', async (req, res) => {
+  console.log("Simple offer followup route hit");
+
+  try {
+    const {
+      profile,
+      primaryPath,
+      secondaryPath,
+      starterOffer,
+      focusChoice,
+      audienceChoice,
+      deliveryChoice
+    } = req.body;
+
+    if (!profile || !primaryPath || !starterOffer || !focusChoice) {
+      return res.status(400).json({
+        error: "Please provide profile, primaryPath, starterOffer, and focusChoice."
+      });
+    }
+
+    const SYSTEM_PROMPT = `
+You are The Simple Offer Decision Path Engine.
+
+Your job is to take the user's initial offer profile and follow-up choices, then produce a final clear offer direction.
+
+Do not teach.
+Do not give multiple unrelated options.
+Do not overcomplicate.
+Be decisive, practical, and premium.
+
+Use this style:
+- clear
+- direct
+- confidence-building
+- specific
+- no fluff
+
+The user has already received their first diagnostic result.
+
+Now refine it into a final offer path.
+
+Return ONLY valid JSON.
+Do not include markdown.
+
+Return JSON in exactly this structure:
+{
+  "finalOfferName": "",
+  "finalOfferDescription": "",
+  "whoItsFor": "",
+  "whatTheyGet": [],
+  "deliveryFormat": "",
+  "positioning": "",
+  "oneSentencePitch": "",
+  "firstVersion": [],
+  "nextMove": ""
+}
+
+Rules:
+- finalOfferName should sound sellable and clear.
+- finalOfferDescription should explain the offer in one short paragraph.
+- whoItsFor should be specific.
+- whatTheyGet should be 3 to 5 concrete deliverables.
+- deliveryFormat should be simple and realistic.
+- positioning should say what the user is NOT and what they ARE.
+- oneSentencePitch should be usable on a landing page or social post.
+- firstVersion should keep the offer lean and easy to launch.
+- nextMove should be one clear action.
+`;
+
+    const userInput = {
+      profile,
+      primaryPath,
+      secondaryPath,
+      starterOffer,
+      focusChoice,
+      audienceChoice: audienceChoice || "not specified",
+      deliveryChoice: deliveryChoice || "not specified"
+    };
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        { role: "user", content: JSON.stringify(userInput) }
+      ],
+      response_format: { type: "json_object" }
+    });
+
+    const result = JSON.parse(completion.choices[0].message.content);
+
+    res.json(result);
+
+  } catch (error) {
+    console.error("FOLLOWUP FULL ERROR:", error);
+    res.status(500).json({
+      error: error.message || "Something went wrong"
+    });
+  }
+});
+
 // Start server
 app.listen(3001, () => {
   console.log('Backend running on http://localhost:3001');
