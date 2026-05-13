@@ -7,15 +7,54 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
    <style>
     
+.layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  min-height: 100vh;  
+  grid-template-areas: "sidebar main";
+  gap: 10px;
+}
+
+.sidebar {
+  background: #041401 !important;
+  padding: 1rem;
+  grid-area: sidebar;   
+}
+
+.sidebar img {
+  max-width: 100%; 
+  height: auto;     
+  display: block;   
+  border-radius: 8px;
+  margin-top: 1rem; 
+}
+/* Mobile layout */
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "main"
+      "sidebar";
+  }
+
+  .content {
+    grid-area: main;
+  }
+
+  .sidebar {
+    grid-area: sidebar;
+  }
+}
+
 /* Base Styles */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #2a2f36, #3e3c5e, #84525c);
+  background: #041b0ce5;
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
-  color: #eaeaea;
+  color: #f2f2f2;
   line-height: 1.6;
 }
 
@@ -59,28 +98,63 @@ p {
   display: inline-block;
   box-shadow: 0 4px 10px rgba(255, 64, 129, 0.4);
   transition: background-color 0.3s ease;
+  box-sizing: border-box;
 }
 
 .cta-button:hover {
   background-color: #e91e63;
 }
 
+.challenge-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  padding: 0.5rem;
+  color: #2a2f36;
+}
+
+.challenge-card img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.challenge-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
 /* Flip Cards */
 .flipcard-column {
   display: flex;
-  flex-direction: column;
-  gap: 2em;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1em;
   align-items: center;
-  padding: 2em;
+  padding: 1rem;
 }
+
+.flipcard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: o.8rem;
+  align-items: center;
+  padding: 2rem;
+}
+
 
 .flip-card {
   background-color: transparent;
-  border: 2px solid #a8e6cf;
+  aspect-ratio: 1 / 1; 
+  border: none;
   border-radius: 12px;
-  width: 500px;
-  height: 250px;
+  width: 90%;
+  height: 90%;
   perspective: 1000px;
+  padding-bottom: 10%;
 }
 
 .flip-card-inner {
@@ -89,7 +163,6 @@ p {
   height: 100%;
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
-  border-radius: 12px;
 }
 
 .flip-card:hover .flip-card-inner {
@@ -98,28 +171,43 @@ p {
 
 .flip-card-front, .flip-card-back {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   backface-visibility: hidden;
-  padding: 1.5em;
+  padding: 1em;
   box-sizing: border-box;
+  border: 1px solid #ccc;
   border-radius: 12px;
+  overflow: hidden;
 }
 
-.flip-card-front {
+/* .flip-card-front {
   background-color: #dff5e1;
   color: #1b1f23;
 }
 
 .flip-card-back {
-  background-color: #b2f2bb;
+  background-color: #f4f4f4;
   color: #1b1f23;
+  transform: rotateY(180deg);
+}  */
+
+.flip-card-front img,
+.flip-card-back img {
+  width: 100%; 
+  height: 100%;    
+  display: flex;   
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+.flip-card-back {
   transform: rotateY(180deg);
 }
 
 /* Signup Section */
 .signup-section {
-  background-color: #2a2f36;
+  background-color: #2f1436;
   padding: 3em 2em;
   border-radius: 12px;
   max-width: 600px;
@@ -162,9 +250,10 @@ input {
   right: 20px;
   background-color: #f4d6e6;
   color: #2a2f36;
-  padding: 1em 1.5em;
+  padding: 0.5em;
   border-radius: 8px;
   font-weight: bold;
+  font-size: 0.7rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   z-index: 1000;
 }
@@ -213,98 +302,163 @@ input {
 }
 
 /* Responsive */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .flip-card {
     width: 100%;
-    height: auto;
+    max-width: 320px;
+    height: 350px;
+    margin: 0 auto;
+    padding-bottom: 2rem;
   }
 
-  .cta-button, .secondary-button {
+  .flipcard-grid {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+    .flip-card-front,
+  .flip-card-back {
+    padding: 1rem;
+  }
+
+  .flipcard-text {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .flip-card h3 {
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+
+  .sticky-cta {
+    right: 10px;
+    bottom: 10px;
+    font-size: 0.65rem;
+    padding: 0.4em 0.7em;
+    max-width: calc(100vw - 20px);
+  }
+
+ .signup-section {
+    padding: 2rem 1rem;
+    margin: 1rem;
+  }
+
+  .signup-form {
+    gap: 1rem;
+  }
+
+  input {
     width: 100%;
-    text-align: center;
+    box-sizing: border-box;
   }
 }
+
   </style>
 </head>
 <body>
 
-  <!-- Hero Section -->
-  <section class="hero fade-in">
-    <h1>Clarity isn’t found—it’s reclaimed.</h1>
-    <p>A 21-day journey to excavate your truth, reclaim your voice, and design a life that reflects your soul.</p>
-    <a href="#signup" class="cta-button pulse">Begin My Challenge</a>
-  </section>
+<div class="layout">
+  <aside class="sidebar">
+    <h2>About Me</h2>
+    <p>Welcome to the Clarity Challenge!</p>
+    <img src="portrait-pic.png" alt="Profile photo" />
+    <ul>
+      <li>Day 1: Reflection</li>
+      <li>Day 2: Journaling</li>
+      <li>Day 3: Gratitude</li>
+    </ul>
+  </aside>
 
-  <!-- Journey Overview -->
-  <section class="flipcard-column fade-in">
-    <div class="flip-card flip-in">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <h3>Week 1: Excavation</h3>
-          <p class="flipcard-text">Uncover beliefs, patterns, and emotional clutter that cloud your clarity.</p>
+  <main class="content">
+      <!-- Hero Section -->
+      <section class="hero fade-in">
+        <h1>Clarity isn’t found—it’s reclaimed.</h1>
+        <p>A 21-day journey to excavate your truth, reclaim your voice, and design a life that reflects your soul.</p>
+        <a href="#signup" class="cta-button pulse">Begin My Challenge</a>
+      </section>
+
+      <!-- Journey Overview -->
+      <section class="flipcard-grid fade-in">
+        <div class="flip-card flip-in">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="week-1-excavation.png" alt="Week 1 Excavation"/>
+            </div>
+            <div class="flip-card-back">
+              <img src="week-1-question.png" alt="Week 2 Reflection Prompt" />
+            </div>
+          </div>
         </div>
-        <div class="flip-card-back">
-          <p class="flipcard-text">“What truths do you need to speak—even if your voice shakes?”</p>
+
+        <div class="flip-card flip-in">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="week-2-reclamation.png" alt="Week 2 Reclamation"/>
+            </div>
+            <div class="flip-card-back">
+              <img src="week-2-question.png" alt="Week 2 Reflection Prompt" />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div class="flip-card flip-in">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <h3>Week 2: Reclamation</h3>
-          <p class="flipcard-text">Reclaim your voice, values, and emotional sovereignty with bold intention.</p>
+        <div class="flip-card flip-in">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">              
+              <img src="week-3-integration.png" alt="Week 3 Integration"/>
+            </div>
+            <div class="flip-card-back">
+              <img src="week-3-question.png" alt="Week 3 Reflection Prompt"/>
+            </div>
+          </div>
         </div>
-        <div class="flip-card-back">
-          <p class="flipcard-text">“What belief about yourself no longer serves you?”</p>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="hero fade-in">
+        <h2>What Clarity Feels Like</h2>
+        <p>“I didn’t realize how much I was carrying until I started writing.”</p>
+        <p>“This challenge didn’t just shift my mindset—it shifted my rhythm.”</p>
+        <p>“I found my voice again. And I’m not giving it back.”</p>
+      </section>
+
+    <!-- Signup Section -->
+    <section id="signup" class="signup-section fade-in">
+      <h2>Ready to go deeper?</h2>
+      <p>Sign up to begin your 21-day clarity journey. You’ll receive daily prompts, guided reflections, and access to the IntelleWhyze chatbot.</p>
+
+      <form id="clarity-form" class="signup-form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" placeholder="Your full name" required />
         </div>
-      </div>
-    </div>
-
-    <div class="flip-card flip-in">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <h3>Week 3: Integration</h3>
-          <p class="flipcard-text">Align your actions, design your rhythm, and embody your truth.</p>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
         </div>
-        <div class="flip-card-back">
-          <p class="flipcard-text">“How will you keep choosing quality—even when it's inconvenient?”</p>
+        <div class="form-group">
+          <label for="start-date">Start Date (optional):</label>
+          <input type="text" id="start-date" name="startDate" placeholder="mm / dd / yyyy" />
         </div>
-      </div>
-    </div>
-  </section>
+        <button type="submit" class="cta-button">Begin My Challenge</button>
+      </form>
 
-  <!-- Testimonials -->
-  <section class="hero fade-in">
-    <h2>What Clarity Feels Like</h2>
-    <p>“I didn’t realize how much I was carrying until I started writing.”</p>
-    <p>“This challenge didn’t just shift my mindset—it shifted my rhythm.”</p>
-    <p>“I found my voice again. And I’m not giving it back.”</p>
-  </section>
+      <div id="feedback" role="alert" style="margin-top: 1em; font-weight: bold;"></div>
+    </section>
 
-<!-- Signup Section -->
-<section id="signup" class="signup-section fade-in">
-  <h2>Ready to go deeper?</h2>
-  <p>Sign up to begin your 21-day clarity journey. You’ll receive daily prompts, guided reflections, and access to the IntelleWhyze chatbot.</p>
+      <!-- Facilitator CTA -->
+    <section class="hero fade-in">
+      <h2>Facilitator Toolkit Available</h2>
+      <p>Want to guide others through the challenge? Request access to our facilitator kit with group prompts, reflection guides, and coaching tips.</p>
+      <a href="#" class="secondary-button">Request Toolkit</a>
+    </section>
 
-  <form id="clarity-form" class="signup-form">
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" placeholder="Your full name" required />
+    <!-- Sticky CTA -->
+    <div class="sticky-cta pulse">
+      Begin My Challenge
     </div>
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" placeholder="you@example.com" required />
-    </div>
-    <div class="form-group">
-      <label for="start-date">Start Date (optional):</label>
-      <input type="text" id="start-date" name="startDate" placeholder="mm / dd / yyyy" />
-    </div>
-    <button type="submit" class="cta-button">Begin My Challenge</button>
-  </form>
+  </main>
+</div>
 
-  <div id="feedback" role="alert" style="margin-top: 1em; font-weight: bold;"></div>
-</section>
 
 <!-- JavaScript -->
 <script>
@@ -342,18 +496,6 @@ input {
     });
   });
 </script>
-
-  <!-- Facilitator CTA -->
-  <section class="hero fade-in">
-    <h2>Facilitator Toolkit Available</h2>
-    <p>Want to guide others through the challenge? Request access to our facilitator kit with group prompts, reflection guides, and coaching tips.</p>
-    <a href="#" class="secondary-button">Request Toolkit</a>
-  </section>
-
-  <!-- Sticky CTA -->
-  <div class="sticky-cta pulse">
-    Begin My Challenge
-  </div>
 
   <script>
   document.addEventListener("DOMContentLoaded", () => {
